@@ -42,7 +42,7 @@ const MENU_ITEMS = [
 function generateSalesData() {
   const sales = [];
   const startDate = new Date(2025, 8, 1); // Sept 1, 2025
-  const endDate = new Date(2026, 2, 12); // March 12, 2026
+  const endDate = new Date(); // TODAY — always current
   let saleId = 1;
 
   for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -152,9 +152,8 @@ export function saveToStorage(key, data) {
 }
 
 export function initializeData() {
-  if (!getFromStorage(STORAGE_KEYS.SALES)) {
-    saveToStorage(STORAGE_KEYS.SALES, generateSalesData());
-  }
+  // Force regenerate so dates stay current
+  saveToStorage(STORAGE_KEYS.SALES, generateSalesData());
   if (!getFromStorage(STORAGE_KEYS.INVENTORY)) {
     saveToStorage(STORAGE_KEYS.INVENTORY, generateInventoryData());
   }
